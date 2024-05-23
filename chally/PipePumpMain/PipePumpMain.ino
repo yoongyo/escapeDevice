@@ -1,18 +1,26 @@
 #include <Time.h>
 #include <TimeAlarms.h>
 
-int Nlight = 8;
+// W = 2
+// n = 3
+// k = 4
+// a = 5
+// o = 6
+
+// kanow
+
+// nkwoa -> konaw
+int Nlight = 3;
 int Klight = 4;
-int Olight = 3;
-int Alight = 7;
-int Wlight = 6;
+int Olight = 5;
+int Alight = 6;
+int Wlight = 2;
 
+int window = 13;
+int pipeStart = 12;
+int btn = 11;  // 리셋 버튼
+int pipeEnd = 10;
 int pump = 9;
-
-int pipeStart = 11;
-int pipeEnd = 5;
-int window = 12;
-int btn = 10;
 
 int pipeFirst = false;
 int pumpFirst = false;
@@ -33,7 +41,11 @@ void setup() {
 
 void loop() {
   unsigned long currentMillis = millis();
-  Serial.println(digitalRead(btn));
+  digitalWrite(Klight, HIGH);
+  digitalWrite(Olight, HIGH);
+  digitalWrite(Nlight, HIGH);
+  digitalWrite(Alight, HIGH);
+  digitalWrite(Wlight, HIGH);
   if (digitalRead(pipeStart) == 1) {
     pipeFirst = true;
   }
@@ -45,7 +57,7 @@ void loop() {
     digitalWrite(Olight, HIGH);
     digitalWrite(Nlight, HIGH);
     digitalWrite(Alight, HIGH);
-    digitalWrite(Wlight, LOW);
+    digitalWrite(Wlight, HIGH);
     pipeFirst = false;
   }
   // 모두 닫은 상태에서 불이 모두 꺼지고 리셋 버튼 누르는것을 확인하고 문제 없으면 OK
@@ -62,10 +74,10 @@ void loop() {
     digitalWrite(Alight, LOW);
     digitalWrite(Nlight, HIGH);
     Alarm.delay(1500);
-    digitalWrite(Wlight, HIGH);
+    digitalWrite(Wlight, LOW);
     digitalWrite(Alight, HIGH);
     Alarm.delay(1500);
-    digitalWrite(Wlight, LOW);
+    digitalWrite(Wlight, HIGH);
     Alarm.delay(3000);
   }
   if (digitalRead(btn) == 0) {
@@ -76,10 +88,11 @@ void loop() {
     digitalWrite(Olight, HIGH);
     digitalWrite(Nlight, HIGH);
     digitalWrite(Alight, HIGH);
-    digitalWrite(Wlight, LOW);
+    digitalWrite(Wlight, HIGH);
   }
   if (pumpFirst) {
+    digitalWrite(pump, LOW);
+  } else {
     digitalWrite(pump, HIGH);
-    pumpFirst = false;
   }
 }
