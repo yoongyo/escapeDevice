@@ -21,9 +21,7 @@ int pipeStart = 12;
 int btn = 11;  // 리셋 버튼
 int pipeEnd = 10;
 int pump = 9;
-
 int pipeFirst = false;
-int pumpFirst = false;
 
 void setup() {
   Serial.begin(9600);
@@ -46,11 +44,9 @@ void loop() {
   digitalWrite(Nlight, HIGH);
   digitalWrite(Alight, HIGH);
   digitalWrite(Wlight, HIGH);
+  digitalWrite(pump, HIGH);
   if (digitalRead(pipeStart) == 1) {
     pipeFirst = true;
-  }
-  if (digitalRead(window) == 0) {
-    pumpFirst = true;
   }
   if (digitalRead(pipeEnd) == 1) {
     digitalWrite(Klight, HIGH);
@@ -81,18 +77,11 @@ void loop() {
     Alarm.delay(3000);
   }
   if (digitalRead(btn) == 0) {
-    pumpFirst = false;
     pipeFirst = false;
-    digitalWrite(pump, LOW);
     digitalWrite(Klight, HIGH);
     digitalWrite(Olight, HIGH);
     digitalWrite(Nlight, HIGH);
     digitalWrite(Alight, HIGH);
     digitalWrite(Wlight, HIGH);
-  }
-  if (pumpFirst) {
-    digitalWrite(pump, LOW);
-  } else {
-    digitalWrite(pump, HIGH);
   }
 }
